@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 import Button from "./Components/Button/Button";
 import Match from "./Components/Match/Match";
@@ -24,14 +24,23 @@ function App() {
 		{ logo: bayernLogo, name: "Bayern", game: 0, points: 0 },
 	]);
 
-	const [score, setScore] = useState([0, 0]);
+	const [score, setScore] = useState(["", ""]);
 	const [tour, setTour] = useState(1);
 
 	const teamNames = useRef(teams.map((team) => team.name));
 
 	const matches = useMemo(() => shuffleTeams(teamNames.current), [teamNames]);
 
-	console.log(matches);
+	const changeScore1 = (e) => {
+		const lastScore = [...score];
+		lastScore[0] = e.target.value;
+		setScore(lastScore);
+	};
+	const changeScore2 = (e) => {
+		const lastScore = [...score];
+		lastScore[1] = e.target.value;
+		setScore(lastScore);
+	};
 
 	return (
 		<>
@@ -44,6 +53,8 @@ function App() {
 					team2={matches[tour - 1][1]}
 					score1={score[0]}
 					score2={score[1]}
+					changeScore1={changeScore1}
+					changeScore2={changeScore2}
 				/>
 			</Wrapper>
 			<Button />
